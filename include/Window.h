@@ -10,16 +10,16 @@ public:
 
 	int initialise();
 
-	GLfloat getBufferWidth() { return bufferWidth; }
-	GLfloat getBufferHeight() { return bufferHeight; }
+	inline GLfloat getBufferWidth() { return bufferWidth; }
+	inline GLfloat getBufferHeight() { return bufferHeight; }
 
-	bool getShouldClose() { return glfwWindowShouldClose(mainWindow); }
+	inline bool getShouldClose() { return glfwWindowShouldClose(mainWindow); }
 
-	bool* getKeys() { return keys; }
+	inline bool* getKeys() { return keys; }
 	GLfloat getXChange();
 	GLfloat getYChange();
 
-	void swapBuffers() { glfwSwapBuffers(mainWindow); }
+	inline void swapBuffers() { glfwSwapBuffers(mainWindow); }
 
 	~Window();
 private:
