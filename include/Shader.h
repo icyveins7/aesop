@@ -23,10 +23,17 @@ public:
         return uniformView;
     }
 
-private:
+protected:
 	GLuint shaderID, uniformProjection, uniformModel, uniformView;
 
 	void CompileShader(const char* vertexCode, const char* fragmentCode);
 	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 };
 
+// ==============================================
+class LineItemShader : public Shader
+{
+public:
+    LineItemShader(const char *vertexCode, const char *fragmentCode);
+    ~LineItemShader();
+};
