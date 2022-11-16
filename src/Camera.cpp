@@ -11,21 +11,6 @@ Camera::~Camera()
 
 }
 
-glm::vec3& Camera::getPos()
-{
-	return pos;
-}
-
-glm::vec3& Camera::getDirection()
-{
-	return direction;
-}
-
-glm::mat4& Camera::getViewMatrix()
-{
-	return viewMat;
-}
-
 void Camera::calcViewMatrix()
 {
 	viewMat = glm::lookAt(pos, pos+direction, up);

@@ -16,9 +16,10 @@ public:
 	);
 	~Camera();
 
-	glm::vec3& getPos();
-	glm::vec3& getDirection();
-	glm::mat4& getViewMatrix();
+	// Getters
+	inline glm::vec3& getPos(){ return pos; }
+	inline glm::vec3& getDirection(){ return direction; }
+	inline glm::mat4& getViewMatrix(){ return viewMat; }
 
 	void calcViewMatrix();
 	void update();
