@@ -1,9 +1,14 @@
 #include "Window.h"
+#include "Camera.h"
+#include "Shader.h"
 
 int main()
 {
     Window mainWindow(1366, 768);
 	mainWindow.initialise();
+
+	Camera camera;
+
 
     // Loop until window closed
 	while (!mainWindow.getShouldClose()) {

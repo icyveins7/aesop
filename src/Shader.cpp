@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <iostream>
+#include <cstring>
 
 Shader::Shader(const char *vertexCode, const char *fragmentCode) {
 	shaderID = 0;
@@ -73,18 +74,6 @@ void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderT
 	}
 
 	glAttachShader(theProgram, theShader);
-}
-
-GLuint Shader::GetProjectionLocation() {
-	return uniformProjection;
-}
-
-GLuint Shader::GetModelLocation() {
-	return uniformModel;
-}
-
-GLuint Shader::GetViewLocation() {
-	return uniformView;
 }
 
 void Shader::UseShader() {

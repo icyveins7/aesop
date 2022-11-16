@@ -11,15 +11,15 @@ public:
     void ClearShader();
 
     // Getters
-    inline GLuint Shader::GetProjectionLocation() {
+    inline GLuint GetProjectionLocation() {
         return uniformProjection;
     }
 
-    inline GLuint Shader::GetModelLocation() {
+    inline GLuint GetModelLocation() {
         return uniformModel;
     }
 
-    inline GLuint Shader::GetViewLocation() {
+    inline GLuint GetViewLocation() {
         return uniformView;
     }
 

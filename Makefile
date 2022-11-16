@@ -6,12 +6,13 @@ OBJ_PATH := obj
 SRC_PATH := src
 DBG_PATH := debug
 INCLUDE_PATH := include
+GLM_PATH := glm
 
 # tool macros
 CXX := g++
 DBGFLAGS := -g
 LIBS := -lGL -lGLEW -lglfw # if apt installed, it is usually given as glfw, not glfw3 
-CXXFLAGS := -I$(INCLUDE_PATH) $(LIBS)
+CXXFLAGS := -I$(INCLUDE_PATH) -I$(GLM_PATH) $(LIBS)
 CCOBJFLAGS := $(CXXFLAGS) -c
 
 # compile macros
