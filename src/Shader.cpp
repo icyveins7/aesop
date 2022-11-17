@@ -3,10 +3,6 @@
 #include <cstring>
 
 Shader::Shader(const char *vertexCode, const char *fragmentCode) {
-	shaderID = 0;
-	uniformModel = 0;
-	uniformProjection = 0;
-
 	CompileShader(vertexCode, fragmentCode);
 }
 
@@ -42,9 +38,9 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode) {
 	}
 
 	// 'binds' uniformXMove in program to "xMove" in shaderID program
-	uniformModel = glGetUniformLocation(shaderID, "model");
+	// uniformModel = glGetUniformLocation(shaderID, "model");
 
-	uniformProjection = glGetUniformLocation(shaderID, "projection");
+	// uniformProjection = glGetUniformLocation(shaderID, "projection");
 
 	uniformView = glGetUniformLocation(shaderID, "view");
 }
@@ -86,17 +82,22 @@ void Shader::ClearShader() {
 		shaderID = 0;
 	}
 
-	uniformModel = 0;
-	uniformProjection = 0;
+	// uniformModel = 0;
+	// uniformProjection = 0;
+	uniformView = 0;
 }
+
 
 Shader::~Shader() {
 	ClearShader();
 }
 
 // =============================
-LineItemShader::LineItemShader(const char *vertexCode, const char *fragmentCode)
-    : Shader{vertexCode, fragmentCode}
+LineItemShader::LineItemShader()
+	: Shader{
+		ReadFile("../shaders/LineItemShader.vert").c_str(),
+		ReadFile("../shaders/LineItemShader.frag").c_str()
+	}
 {
     
 }
