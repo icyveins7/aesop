@@ -13,7 +13,7 @@ Camera::~Camera()
 
 void Camera::calcViewMatrix()
 {
-	viewMat = glm::lookAt(pos, pos+direction, up);
+	viewMat = glm::lookAt(pos, glm::vec3(pos.x, pos.y, 0.0), up); // it's actually a lot simpler than i thought	
 }
 
 void Camera::update()

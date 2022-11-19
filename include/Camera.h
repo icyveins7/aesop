@@ -28,7 +28,11 @@ private:
 	glm::vec3 pos;
 	glm::vec3 direction;
 	glm::mat4 viewMat;
-	const glm::vec3 up = {0.0f, 0.0f, 1.0f}; // this is constant since we're in orthographic projection
+
+	// this is constant since we're in orthographic projection
+	// note that this represents the y-axis of the camera (recall that screen is in x-y, z is out of screen)
+	// hence up should be parallel to y-axis, in order for the image to not be rotated
+	const glm::vec3 up = {0.0f, 1.0f, 0.0f}; 
 
 };
 
