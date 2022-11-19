@@ -93,10 +93,10 @@ Shader::~Shader() {
 }
 
 // =============================
-LineItemShader::LineItemShader()
+PlotShader::PlotShader()
 	: Shader{
-		ReadFile("../shaders/LineItemShader.vert").c_str(),
-		ReadFile("../shaders/LineItemShader.frag").c_str()
+		ReadFile("../shaders/PlotShader.vert").c_str(),
+		ReadFile("../shaders/PlotShader.frag").c_str()
 	}
 {
     

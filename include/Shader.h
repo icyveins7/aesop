@@ -58,9 +58,9 @@ protected:
 };
 
 // ==============================================
-class LineItemShader : public Shader
+class PlotShader : public Shader
 {
 public:
-    LineItemShader();
-    ~LineItemShader();
+    PlotShader();
+    ~PlotShader();
 };

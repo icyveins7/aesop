@@ -11,7 +11,7 @@ int main()
 
 	Camera camera;
 
-	LineItemShader lineItemShader;
+	PlotShader lineItemShader;
 
 	GLuint uniformView = 0;
 
