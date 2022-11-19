@@ -26,4 +26,4 @@ public:
 
     virtual void RenderMesh() override;
 
-}
+};

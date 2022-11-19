@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "Camera.h"
 #include "Shader.h"
+#include "Mesh.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -12,6 +13,20 @@ int main()
 	Camera camera;
 
 	PlotShader lineItemShader;
+
+	LineMesh lineMesh;
+	GLfloat vertices[] = {
+		0.0f, 1.0f, 0.0f,
+		0.5f, 0.0f, 0.0f,
+		1.0f, 1.0f, 0.0f
+	};
+	unsigned int indices [] = {
+		0,1,
+		1,2,
+		2,3
+	};
+	lineMesh.CreateMesh(vertices, indices, 3*3, 3*2);
+
 
 	GLuint uniformView = 0;
 
@@ -35,6 +50,9 @@ int main()
 		// Set the uniform view
 		uniformView = lineItemShader.GetViewLocation();
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
+
+		// Render things
+		lineMesh.RenderMesh();
 
 		// unbind
 		glUseProgram(0);

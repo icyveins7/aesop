@@ -3,32 +3,15 @@
 #include <string>
 #include <fstream>
 
-// Helper function for loading shaders from files
-std::string ReadFile(const char* fileLocation) {
-	std::string content;
-	std::ifstream filestream(fileLocation, std::ios::in);
-
-	if (!filestream.is_open()) {
-		printf("Failed to read %s, file doesn't exist.\n", fileLocation);
-		return "";
-	}
-
-	std::string line = "";
-	while (!filestream.eof()) {
-		std::getline(filestream, line);
-		content.append(line + "\n");
-	}
-
-	filestream.close();
-	return content;
-}
-
 /* The parent shader class */
 class Shader
 {
 public:
 	Shader(const char *vertexCode, const char *fragmentCode);
 	~Shader();
+
+	// Helper function for loading shaders from files
+	static std::string ReadFile(const char* fileLocation);
 
     void UseShader();
     void ClearShader();

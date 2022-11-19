@@ -92,12 +92,36 @@ Shader::~Shader() {
 	ClearShader();
 }
 
+std::string Shader::ReadFile(const char* fileLocation) {
+	std::string content;
+	std::ifstream filestream(fileLocation, std::ios::in);
+
+	if (!filestream.is_open()) {
+		printf("Failed to read %s, file doesn't exist.\n", fileLocation);
+		return "";
+	}
+
+	std::string line = "";
+	while (!filestream.eof()) {
+		std::getline(filestream, line);
+		content.append(line + "\n");
+	}
+
+	filestream.close();
+	return content;
+}
+
 // =============================
 PlotShader::PlotShader()
 	: Shader{
-		ReadFile("../shaders/PlotShader.vert").c_str(),
-		ReadFile("../shaders/PlotShader.frag").c_str()
+		Shader::ReadFile("../shaders/PlotShader.vert").c_str(),
+		Shader::ReadFile("../shaders/PlotShader.frag").c_str()
 	}
 {
     
+}
+
+PlotShader::~PlotShader()
+{
+
 }
