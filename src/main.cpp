@@ -43,8 +43,8 @@ int main()
 		// Enable shaders
 		lineItemShader.UseShader();
 
-		// Process the view matrix
-		camera.calcViewMatrix(); 
+		// Do all the camera work (also processes the new frame's view matrix)
+		camera.update(mainWindow.getKeys());
 
 		// Set the uniform view
 		uniformView = lineItemShader.GetViewLocation();

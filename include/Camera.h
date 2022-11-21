@@ -22,7 +22,8 @@ public:
 	inline glm::mat4& getViewMatrix(){ return viewMat; }
 
 	void calcViewMatrix();
-	void update();
+	void keyControl(bool *keys);
+	void update(bool *keys);
 
 private:
 	glm::vec3 pos;

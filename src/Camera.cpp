@@ -16,9 +16,29 @@ void Camera::calcViewMatrix()
 	viewMat = glm::lookAt(pos, glm::vec3(pos.x, pos.y, 0.0), up); // it's actually a lot simpler than i thought	
 }
 
-void Camera::update()
+void Camera::keyControl(bool *keys)
+{
+	// WSAD to move around (for now)
+	if (keys[GLFW_KEY_W])
+		pos += glm::vec3(0.0f, 0.1f, 0.0f);
+
+	if (keys[GLFW_KEY_S])
+		pos += glm::vec3(0.0f, -0.1f, 0.0f);
+
+	if (keys[GLFW_KEY_A])
+		pos += glm::vec3(-0.1f, 0.0f, 0.0f);
+
+	if (keys[GLFW_KEY_D])
+		pos += glm::vec3(0.1f, 0.0f, 0.0f);
+
+}
+
+void Camera::update(bool *keys)
 {
 	// Fill in all the computations here
+	keyControl(keys);
+
+	// At the end, compute the new view matrix
 	calcViewMatrix();
 }
 

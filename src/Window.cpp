@@ -1,8 +1,8 @@
 #include "Window.h"
 
 Window::Window() {
-	width = 800;
-	height = 600;
+	width = 400;
+	height = 400;
 
 	for (size_t i = 0; i < 1024; i++) {
 		keys[i] = 0;
