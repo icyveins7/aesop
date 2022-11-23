@@ -5,9 +5,11 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-int main()
+#include <vector>
+
+int main(int argc, char *argv[])
 {
-    Window mainWindow(1366, 768);
+    Window mainWindow(640, 480);
 	mainWindow.initialise();
 
 	Camera camera;
@@ -15,23 +17,38 @@ int main()
 	PlotShader lineItemShader;
 
 	LineMesh lineMesh;
-	GLfloat vertices[] = {
-		0.0f, 1.0f, 0.0f,
-		0.5f, 0.0f, 0.0f,
-		1.0f, 1.0f, 0.0f
-	};
-	unsigned int indices [] = {
-		0,1,
-		1,2
-	};
-	lineMesh.CreateMesh(vertices, indices, 3*3, 2*2);
+	std::vector<GLfloat> vertices;
+	std::vector<unsigned int> indices;
 
+	// Default test
+	if (argc == 1)
+	{
+		vertices = std::vector<GLfloat>{
+			0.0f, 1.0f, 0.0f,
+			0.5f, 0.0f, 0.0f,
+			1.0f, 1.0f, 0.0f
+		};
+		indices = std::vector<unsigned int>{
+			0,1,
+			1,2
+		};
+		lineMesh.CreateMesh(vertices.data(), indices.data(), 3*3, 2*2);
+	}
+	else{
+		return 1; // TODO, configure number of points passed in with random gen
+	}
 
-	GLuint uniformView = 0;
+	// GLuint uniformView = 0;
+	GLuint uniformVp = 0;
 
     // Loop until window closed
+	GLfloat now, prev = 0;
 	while (!mainWindow.getShouldClose()) {
-		GLfloat now = glfwGetTime();
+		now = glfwGetTime();
+
+		// Diagnostics for FPS?
+		printf("FPS: %.2f\n", 1/(now-prev));
+		prev = now;
 
 		// Get and handle user input events
 		glfwPollEvents();
@@ -47,8 +64,10 @@ int main()
 		camera.update(mainWindow.getKeys());
 
 		// Set the uniform view
-		uniformView = lineItemShader.GetViewLocation();
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
+		// uniformView = lineItemShader.GetViewLocation();
+		uniformVp = lineItemShader.GetVpLocation();
+		// glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.getViewMatrix()));
+		glUniformMatrix4fv(uniformVp, 1, GL_FALSE, glm::value_ptr(camera.getVpMatrix()));
 
 		// Render things
 		lineMesh.RenderMesh();

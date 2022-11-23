@@ -25,16 +25,20 @@ public:
     //     return uniformModel;
     // }
 
-    inline GLuint GetViewLocation() {
-        return uniformView;
-    }
+    // inline GLuint GetViewLocation() {
+    //     return uniformView;
+    // }
 
+    inline GLuint GetVpLocation(){return uniformVp;}
 
 protected:
 	GLuint shaderID = 0;
     // GLuint uniformProjection = 0;
     // GLuint uniformModel = 0;
-    GLuint uniformView = 0;
+    // GLuint uniformView = 0;
+
+    // Combined the matrices
+    GLuint uniformVp = 0;
 
 	void CompileShader(const char* vertexCode, const char* fragmentCode);
 	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);

@@ -16,6 +16,13 @@ void Camera::calcViewMatrix()
 	viewMat = glm::lookAt(pos, glm::vec3(pos.x, pos.y, 0.0), up); // it's actually a lot simpler than i thought	
 }
 
+void Camera::calcProjectionMatrix()
+{
+	// Under orthographic projection, we are simply defining the cuboid from the camera forwards
+	// Thus the fatter/taller the cuboid, the more we view and render into the screen => zoomed out
+	projMat = glm::ortho(-zoom, zoom, -zoom, zoom, 0.0f, 100.0f);
+}
+
 void Camera::keyControl(bool *keys)
 {
 	// WSAD to move around (for now)
@@ -31,6 +38,12 @@ void Camera::keyControl(bool *keys)
 	if (keys[GLFW_KEY_D])
 		pos += glm::vec3(0.1f, 0.0f, 0.0f);
 
+	if (keys[GLFW_KEY_Q])
+		zoom = zoom <= 0 ? zoom : zoom - 0.1;
+
+	if (keys[GLFW_KEY_E])
+		zoom += 0.1;
+
 }
 
 void Camera::update(bool *keys)
@@ -38,8 +51,13 @@ void Camera::update(bool *keys)
 	// Fill in all the computations here
 	keyControl(keys);
 
-	// At the end, compute the new view matrix
+	// At the end, compute the new view and projection matrix
 	calcViewMatrix();
+	calcProjectionMatrix();
+	
+	// Combine them
+	vpMat = projMat * viewMat;
+
 }
 
 

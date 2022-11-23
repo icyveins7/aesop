@@ -20,8 +20,15 @@ public:
 	inline glm::vec3& getPos(){ return pos; }
 	inline glm::vec3& getDirection(){ return direction; }
 	inline glm::mat4& getViewMatrix(){ return viewMat; }
+	inline glm::mat4& getProjectionMatrix(){ return projMat; }
+	inline glm::mat4& getVpMatrix(){ return vpMat; }
 
+	// Setters
+	inline void setZoom(float new_zoom){zoom = new_zoom;}
+
+	// Computations
 	void calcViewMatrix();
+	void calcProjectionMatrix();
 	void keyControl(bool *keys);
 	void update(bool *keys);
 
@@ -29,6 +36,9 @@ private:
 	glm::vec3 pos;
 	glm::vec3 direction;
 	glm::mat4 viewMat;
+	glm::mat4 projMat;
+	glm::mat4 vpMat;
+	float zoom = 1.0;
 
 	// this is constant since we're in orthographic projection
 	// note that this represents the y-axis of the camera (recall that screen is in x-y, z is out of screen)
