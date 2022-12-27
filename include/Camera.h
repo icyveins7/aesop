@@ -45,6 +45,10 @@ private:
 	// hence up should be parallel to y-axis, in order for the image to not be rotated
 	const glm::vec3 up = {0.0f, 1.0f, 0.0f}; 
 
+	// Scaling movement
+	float getXSpan(){ return 2 * zoom; }
+	float getYSpan(){ return 2 * zoom; } // these will change eventually
+
 };
 
 

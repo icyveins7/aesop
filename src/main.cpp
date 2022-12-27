@@ -7,6 +7,20 @@
 
 #include <vector>
 
+#include <random>
+
+void generateIndices(std::vector<unsigned int> &indices, int numPts)
+{
+	// For n points, there are n-1 segments
+	indices.resize((numPts-1)*2);
+	// Simply increment
+	for (int i = 0; i < indices.size() / 2; i++)
+	{
+		indices.at(i*2 + 0) = i;
+		indices.at(i*2 + 1) = i + 1;
+	}
+}
+
 int main(int argc, char *argv[])
 {
     Window mainWindow(640, 480);
@@ -32,11 +46,29 @@ int main(int argc, char *argv[])
 			0,1,
 			1,2
 		};
-		lineMesh.CreateMesh(vertices.data(), indices.data(), 3*3, 2*2);
 	}
 	else{
-		return 1; // TODO, configure number of points passed in with random gen
+		int numPts = atoi(argv[1]);
+		printf("Using %d points \n", numPts);
+
+		float step = 0.001;
+
+		vertices.resize(numPts * 3);
+		for (int i = 0; i < numPts; i++){
+			vertices.at(i*3 + 0) = step * i; // x
+			vertices.at(i*3 + 1) = sinf(step*i); // y
+			vertices.at(i*3 + 2) = 0.0f;
+		}
+
+		// automatically generate contiguous indices
+		generateIndices(indices, numPts);
 	}
+
+	lineMesh.CreateMesh(
+			vertices.data(), indices.data(),
+			(int)vertices.size(),
+			(int)indices.size()
+		);
 
 	// GLuint uniformView = 0;
 	GLuint uniformVp = 0;

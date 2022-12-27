@@ -39,10 +39,10 @@ void Camera::keyControl(bool *keys)
 		pos += glm::vec3(0.1f, 0.0f, 0.0f);
 
 	if (keys[GLFW_KEY_Q])
-		zoom = zoom <= 0 ? zoom : zoom - 0.1;
+		zoom = zoom <= 0 ? zoom : zoom * 0.9;
 
 	if (keys[GLFW_KEY_E])
-		zoom += 0.1;
+		zoom *= 1.1;
 
 }
 

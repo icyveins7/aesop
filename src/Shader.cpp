@@ -100,7 +100,7 @@ std::string Shader::ReadFile(const char* fileLocation) {
 
 	if (!filestream.is_open()) {
 		printf("Failed to read %s, file doesn't exist.\n", fileLocation);
-		return "";
+		throw 1;
 	}
 
 	std::string line = "";
