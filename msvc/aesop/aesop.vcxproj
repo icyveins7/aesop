@@ -140,6 +140,10 @@
       <AdditionalLibraryDirectories>$(GLEW_DIR)\lib\Release\x64;$(GLFW_DIR)\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>mkdir "$(TargetDir)..\shaders\"
+copy /Y "$(SolutionDir)..\..\shaders\*" "$(TargetDir)..\shaders\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\Camera.h" />
