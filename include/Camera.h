@@ -24,13 +24,12 @@ public:
 	inline glm::mat4& getVpMatrix(){ return vpMat; }
 
 	// Setters
-	inline void setZoom(float new_zoom){zoom = new_zoom;}
+	/*inline void setZoom(float new_zoom){zoom = new_zoom;}*/
 
 	// Computations
 	void calcViewMatrix();
 	void calcProjectionMatrix();
-	void keyControl(bool *keys);
-	void update(bool *keys);
+	void update(bool *keys, glm::vec4 &dataLimits);
 
 private:
 	glm::vec3 pos;
@@ -38,16 +37,20 @@ private:
 	glm::mat4 viewMat;
 	glm::mat4 projMat;
 	glm::mat4 vpMat;
-	float zoom = 1.0;
+	float xzoom = 1.0f;
+	float yzoom = 1.0f;
 
 	// this is constant since we're in orthographic projection
 	// note that this represents the y-axis of the camera (recall that screen is in x-y, z is out of screen)
 	// hence up should be parallel to y-axis, in order for the image to not be rotated
 	const glm::vec3 up = {0.0f, 1.0f, 0.0f}; 
 
+	// All hotkeys are in here
+	void keyControl(bool* keys, glm::vec4 &dataLimits);
+
 	// Scaling movement
-	float getXSpan(){ return 2 * zoom; }
-	float getYSpan(){ return 2 * zoom; } // these will change eventually
+	float getXSpan(){ return 2 * xzoom; }
+	float getYSpan(){ return 2 * yzoom; } // these will change eventually
 
 };
 

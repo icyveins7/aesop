@@ -8,6 +8,7 @@
 #include <vector>
 
 #include <random>
+#include <algorithm>
 
 void generateIndices(std::vector<unsigned int> &indices, int numPts)
 {
@@ -19,6 +20,29 @@ void generateIndices(std::vector<unsigned int> &indices, int numPts)
 		indices.at(i*2 + 0) = i;
 		indices.at(i*2 + 1) = i + 1;
 	}
+}
+
+glm::vec4 getDataLimits(std::vector<GLfloat>& vertices)
+{
+	// Assumed 3d vertices
+	int numPts = (int)vertices.size() / 3;
+
+	// Initialise to the first value
+	GLfloat xmin = vertices.at(0);
+	GLfloat xmax = vertices.at(0);
+	GLfloat ymin = vertices.at(1);
+	GLfloat ymax = vertices.at(1);
+
+	// Simple loop
+	for (int i = 1; i < numPts; i++)
+	{
+		xmin = vertices.at(i * 3 + 0) < xmin ? vertices.at(i * 3 + 0) : xmin;
+		xmax = vertices.at(i * 3 + 0) > xmax ? vertices.at(i * 3 + 0) : xmax;
+		ymin = vertices.at(i * 3 + 1) < ymin ? vertices.at(i * 3 + 1) : ymin;
+		ymax = vertices.at(i * 3 + 1) > ymax ? vertices.at(i * 3 + 1) : ymax;
+	}
+
+	return glm::vec4(xmin, xmax, ymin, ymax);
 }
 
 int main(int argc, char *argv[])
@@ -64,11 +88,15 @@ int main(int argc, char *argv[])
 		generateIndices(indices, numPts);
 	}
 
+	// Create the mesh
 	lineMesh.CreateMesh(
 			vertices.data(), indices.data(),
 			(int)vertices.size(),
 			(int)indices.size()
 		);
+	// Generate bounds for plotting camera later
+	glm::vec4 dataLimits = getDataLimits(vertices);
+	printf("Data limits are (%f, %f, %f, %f)\n", dataLimits[0], dataLimits[1], dataLimits[2], dataLimits[3]);
 
 	// GLuint uniformView = 0;
 	GLuint uniformVp = 0;
@@ -79,7 +107,7 @@ int main(int argc, char *argv[])
 		now = glfwGetTime();
 
 		// Diagnostics for FPS?
-		printf("FPS: %.2f\n", 1/(now-prev));
+		//printf("FPS: %.2f\n", 1/(now-prev));
 		prev = now;
 
 		// Get and handle user input events
@@ -93,7 +121,7 @@ int main(int argc, char *argv[])
 		lineItemShader.UseShader();
 
 		// Do all the camera work (also processes the new frame's view matrix)
-		camera.update(mainWindow.getKeys());
+		camera.update(mainWindow.getKeys(), dataLimits);
 
 		// Set the uniform view
 		// uniformView = lineItemShader.GetViewLocation();
