@@ -10,6 +10,8 @@ public:
 
 	int initialise();
 
+	inline GLfloat getWidth() { return width; }
+	inline GLfloat getHeight() { return height; }
 	inline GLfloat getBufferWidth() { return bufferWidth; }
 	inline GLfloat getBufferHeight() { return bufferHeight; }
 
@@ -38,6 +40,6 @@ private:
 	void createCallbacks();
 
 	static void handleKeys(GLFWwindow *window, int key, int code, int action, int mode);
-	static void handleMouse(GLFWwindow* window, double xPos, double yPos);
+	static void handleMouseCursor(GLFWwindow* window, double xPos, double yPos);
 };
 

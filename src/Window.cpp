@@ -80,18 +80,18 @@ int Window::initialise() {
 
 void Window::createCallbacks() {
 	glfwSetKeyCallback(mainWindow, handleKeys);
-	glfwSetCursorPosCallback(mainWindow, handleMouse);
+	glfwSetCursorPosCallback(mainWindow, handleMouseCursor);
 }
 
 GLfloat Window::getXChange() {
 	GLfloat theChange = xChange;
-	xChange = 0.0f;
+	xChange = 0.0f; // note that this 'consumes' the change
 	return theChange;
 }
 
 GLfloat Window::getYChange() {
 	GLfloat theChange = yChange;
-	yChange = 0.0f;
+	yChange = 0.0f; // note that this 'consumes' the change
 	return theChange;
 }
 
@@ -114,7 +114,7 @@ void Window::handleKeys(GLFWwindow* window, int key, int code, int action, int m
 	}
 }
 
-void Window::handleMouse(GLFWwindow* window, double xPos, double yPos)
+void Window::handleMouseCursor(GLFWwindow* window, double xPos, double yPos)
 {
 	Window *theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
 
@@ -124,9 +124,15 @@ void Window::handleMouse(GLFWwindow* window, double xPos, double yPos)
 		theWindow->mouseFirstMoved = false;
 	}
 
-	theWindow->xChange = xPos - theWindow->lastX;
-	theWindow->yChange = theWindow->lastY - yPos; // this prevents inversion of up/down camera
-
+	// Update the changes only if button is pressed
+	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
+	{
+		// Note that the callback may fire more often than the consumer, hence we must accumulate changes with +=, otherwise some cursor movement will be 'lost'
+		// We also normalise as a fraction of window coords?
+		theWindow->xChange += (xPos - theWindow->lastX) / theWindow->getBufferWidth(); // use bufferWidth or width?
+		theWindow->yChange += (theWindow->lastY - yPos) / theWindow->getBufferHeight(); // this prevents inversion of up/down camera
+	}
+	
 	theWindow->lastX = xPos;
 	theWindow->lastY = yPos;
 }

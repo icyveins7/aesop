@@ -8,7 +8,7 @@
 #include <vector>
 
 #include <random>
-#include <algorithm>
+//#include <algorithm>
 
 void generateIndices(std::vector<unsigned int> &indices, int numPts)
 {
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 		lineItemShader.UseShader();
 
 		// Do all the camera work (also processes the new frame's view matrix)
-		camera.update(mainWindow.getKeys(), dataLimits);
+		camera.update(mainWindow.getKeys(), dataLimits, mainWindow.getXChange(), mainWindow.getYChange());
 
 		// Set the uniform view
 		// uniformView = lineItemShader.GetViewLocation();

@@ -84,10 +84,19 @@ void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
 
 }
 
-void Camera::update(bool *keys, glm::vec4 &dataLimits)
+void Camera::mouseControl(GLfloat xchange, GLfloat ychange)
+{
+	// scale by the span
+	pos[0] -= xchange * getXSpan(); // -= because we want the 'dragging' effect
+	pos[1] -= ychange * getYSpan();
+	// TODO: this works, but somehow we are desyncing from the dragged point
+}
+
+void Camera::update(bool *keys, glm::vec4 &dataLimits, GLfloat xchange, GLfloat ychange)
 {
 	// Fill in all the computations here
 	keyControl(keys, dataLimits);
+	mouseControl(xchange, ychange);
 
 	// At the end, compute the new view and projection matrix
 	calcViewMatrix();
