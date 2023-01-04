@@ -31,7 +31,7 @@ void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
 		pos += glm::vec3(0.0f, getYSpan() * 0.01f, 0.0f);
 
 	if (keys[GLFW_KEY_S])
-		pos += glm::vec3(0.0f, getYSpan() -0.01f, 0.0f);
+		pos += glm::vec3(0.0f, getYSpan() * -0.01f, 0.0f);
 
 	if (keys[GLFW_KEY_A])
 		pos += glm::vec3(getXSpan() * -0.01f, 0.0f, 0.0f);
