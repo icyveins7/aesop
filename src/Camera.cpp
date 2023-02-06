@@ -43,15 +43,15 @@ void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
 	if (keys[GLFW_KEY_Q])
 	{
 		if (keys[GLFW_KEY_LEFT_SHIFT]) // x-only modifier
-			xzoom = xzoom <= 0 ? xzoom : xzoom * 0.9;
+			xzoom = xzoom <= 0.0f ? xzoom : xzoom * 0.9f;
 
 		else if (keys[GLFW_KEY_LEFT_CONTROL]) // y-only modifier
-			yzoom = yzoom <= 0 ? yzoom : yzoom * 0.9;
+			yzoom = yzoom <= 0.0f ? yzoom : yzoom * 0.9f;
 
 		else // do both
 		{
-			xzoom = xzoom <= 0 ? xzoom : xzoom * 0.9;
-			yzoom = yzoom <= 0 ? yzoom : yzoom * 0.9;
+			xzoom = xzoom <= 0.0f ? xzoom : xzoom * 0.9f;
+			yzoom = yzoom <= 0.0f ? yzoom : yzoom * 0.9f;
 		}
 			
 	}
@@ -59,15 +59,15 @@ void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
 	if (keys[GLFW_KEY_E])
 	{
 		if (keys[GLFW_KEY_LEFT_SHIFT]) // x-only modifier
-			xzoom *= 1.1;
+			xzoom *= 1.1f;
 
 		else if (keys[GLFW_KEY_LEFT_CONTROL]) // y-only modifier
-			yzoom *= 1.1;
+			yzoom *= 1.1f;
 
 		else // do both
 		{
-			xzoom *= 1.1;
-			yzoom *= 1.1;
+			xzoom *= 1.1f;
+			yzoom *= 1.1f;
 		}
 	}
 		
@@ -89,14 +89,22 @@ void Camera::mouseControl(GLfloat xchange, GLfloat ychange)
 	// scale by the span
 	pos[0] -= xchange * getXSpan(); // -= because we want the 'dragging' effect
 	pos[1] -= ychange * getYSpan();
-	// TODO: this works, but somehow we are desyncing from the dragged point
 }
 
-void Camera::update(bool *keys, glm::vec4 &dataLimits, GLfloat xchange, GLfloat ychange)
+void Camera::mouseScrollControl(GLfloat yscroll)
+{
+	// perform a similar zooming function as the Q/E keys, but scaled
+	const GLfloat scrollScale = 10.0f; // note that due to division, if scale is bigger then the scroll rate is slower
+	xzoom = xzoom * (1.0f - yscroll / scrollScale); // minus is due to convention that scrolling up = zooming in
+	yzoom = xzoom * (1.0f - yscroll / scrollScale);
+}
+
+void Camera::update(bool *keys, glm::vec4 &dataLimits, GLfloat xchange, GLfloat ychange, GLfloat yscroll)
 {
 	// Fill in all the computations here
 	keyControl(keys, dataLimits);
 	mouseControl(xchange, ychange);
+	mouseScrollControl(yscroll);
 
 	// At the end, compute the new view and projection matrix
 	calcViewMatrix();

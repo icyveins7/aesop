@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 		lineItemShader.UseShader();
 
 		// Do all the camera work (also processes the new frame's view matrix)
-		camera.update(mainWindow.getKeys(), dataLimits, mainWindow.getXChange(), mainWindow.getYChange());
+		camera.update(mainWindow.getKeys(), dataLimits, mainWindow.getXChange(), mainWindow.getYChange(), mainWindow.getYScroll());
 
 		// Set the uniform view
 		// uniformView = lineItemShader.GetViewLocation();

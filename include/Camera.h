@@ -29,7 +29,7 @@ public:
 	// Computations
 	void calcViewMatrix();
 	void calcProjectionMatrix();
-	void update(bool *keys, glm::vec4 &dataLimits, GLfloat xchange, GLfloat ychange);
+	void update(bool *keys, glm::vec4 &dataLimits, GLfloat xchange, GLfloat ychange, GLfloat yscroll);
 
 private:
 	glm::vec3 pos;
@@ -48,6 +48,7 @@ private:
 	// All hotkeys are in here
 	void keyControl(bool* keys, glm::vec4 &dataLimits);
 	void mouseControl(GLfloat xchange, GLfloat ychange);
+	void mouseScrollControl(GLfloat yscroll);
 
 	// Scaling movement
 	float getXSpan(){ return 2 * xzoom; }

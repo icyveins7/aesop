@@ -81,6 +81,7 @@ int Window::initialise() {
 void Window::createCallbacks() {
 	glfwSetKeyCallback(mainWindow, handleKeys);
 	glfwSetCursorPosCallback(mainWindow, handleMouseCursor);
+	glfwSetScrollCallback(mainWindow, handleMouseScroll);
 }
 
 GLfloat Window::getXChange() {
@@ -119,8 +120,8 @@ void Window::handleMouseCursor(GLFWwindow* window, double xPos, double yPos)
 	Window *theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
 
 	if (theWindow->mouseFirstMoved) {
-		theWindow->lastX = xPos;
-		theWindow->lastY = yPos;
+		theWindow->lastX = (GLfloat)xPos;
+		theWindow->lastY = (GLfloat)yPos;
 		theWindow->mouseFirstMoved = false;
 	}
 
@@ -129,12 +130,26 @@ void Window::handleMouseCursor(GLFWwindow* window, double xPos, double yPos)
 	{
 		// Note that the callback may fire more often than the consumer, hence we must accumulate changes with +=, otherwise some cursor movement will be 'lost'
 		// We also normalise as a fraction of window coords?
-		theWindow->xChange += (xPos - theWindow->lastX) / theWindow->getBufferWidth(); // use bufferWidth or width?
-		theWindow->yChange += (theWindow->lastY - yPos) / theWindow->getBufferHeight(); // this prevents inversion of up/down camera
+		theWindow->xChange += ((GLfloat)xPos - theWindow->lastX) / (GLfloat)(theWindow->getBufferWidth()); // use bufferWidth or width?
+		theWindow->yChange += (theWindow->lastY - (GLfloat)yPos) / (GLfloat)(theWindow->getBufferHeight()); // this prevents inversion of up/down camera
 	}
 	
-	theWindow->lastX = xPos;
-	theWindow->lastY = yPos;
+	theWindow->lastX = (GLfloat)xPos;
+	theWindow->lastY = (GLfloat)yPos;
+}
+
+void Window::handleMouseScroll(GLFWwindow* window, double xoffset, double yoffset)
+{
+	Window* theWindow = static_cast<Window*>(glfwGetWindowUserPointer(window));
+	// we ignore the xoffset, since most mice don't have it
+	theWindow->yScroll += (GLfloat)yoffset; // again, we accumulate instead of setting
+}
+
+GLfloat Window::getYScroll()
+{
+	GLfloat tmp = yScroll;
+	yScroll = 0.0f; // consume the change
+	return tmp;
 }
 
 Window::~Window() {
