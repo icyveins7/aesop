@@ -62,13 +62,13 @@ int main(int argc, char *argv[])
     if (argc == 1)
     {
         vertices = std::vector<GLfloat>{
-        	0.0f, 1.0f, 0.0f,
-        	0.5f, 0.0f, 0.0f,
-        	1.0f, 1.0f, 0.0f
+            0.0f, 1.0f, 0.0f,
+            0.5f, 0.0f, 0.0f,
+            1.0f, 1.0f, 0.0f
         };
         indices = std::vector<unsigned int>{
-        	0,1,
-        	1,2
+            0,1,
+            1,2
         };
     }
     else{
@@ -79,9 +79,9 @@ int main(int argc, char *argv[])
 
         vertices.resize(numPts * 3);
         for (int i = 0; i < numPts; i++){
-        	vertices.at(i*3 + 0) = step * i; // x
-        	vertices.at(i*3 + 1) = sinf(step*i); // y
-        	vertices.at(i*3 + 2) = 0.0f;
+            vertices.at(i*3 + 0) = step * i; // x
+            vertices.at(i*3 + 1) = sinf(step*i); // y
+            vertices.at(i*3 + 2) = 0.0f;
         }
 
         // automatically generate contiguous indices
@@ -133,7 +133,7 @@ int main(int argc, char *argv[])
         lineMesh.RenderMesh();
 
         // unbind
-    glUseProgram(0);
+        glUseProgram(0);
 
         mainWindow.swapBuffers();
     }
