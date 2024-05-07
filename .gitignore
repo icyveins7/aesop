@@ -36,3 +36,6 @@ bin/*
 
 # Custom additions
 .vs/
+.cache/
+build/
+.DS_Store
