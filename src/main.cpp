@@ -107,12 +107,10 @@ int main(int argc, char *argv[])
 
     // Loop until window closed
     GLfloat now, prev = 0;
+    size_t frameCount = 0;
     while (!mainWindow.getShouldClose()) {
-        now = glfwGetTime();
-
-        // Diagnostics for FPS?
-        //printf("FPS: %.2f\n", 1/(now-prev));
-        prev = now;
+        if (frameCount == 0)
+            prev = glfwGetTime();
 
         // Get and handle user input events
         glfwPollEvents();
@@ -140,6 +138,19 @@ int main(int argc, char *argv[])
         glUseProgram(0);
 
         mainWindow.swapBuffers();
+
+
+        // Diagnostics for FPS?
+        frameCount++;
+        if (frameCount == 10)
+        {
+            printf("FPS: %.2f\n",
+                   1/(glfwGetTime() - prev)*10);
+            frameCount = 0;
+        }
+
+        // //printf("FPS: %.2f\n", 1/(now-prev));
+        // prev = now;
     }
 
     return 0;
