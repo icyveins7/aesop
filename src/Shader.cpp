@@ -29,13 +29,13 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode) {
         return;
     }
 
-    glValidateProgram(shaderID);
-    glGetProgramiv(shaderID, GL_VALIDATE_STATUS, &result);
-    if (!result) {
-        glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
-        printf("Error validating program: '%s'\n", eLog);
-        return;
-    }
+    // glValidateProgram(shaderID);
+    // glGetProgramiv(shaderID, GL_VALIDATE_STATUS, &result);
+    // if (!result) {
+    //     glGetProgramInfoLog(shaderID, sizeof(eLog), NULL, eLog);
+    //     printf("Error validating program: '%s'\n", eLog);
+    //     return;
+    // }
 
     // 'binds' uniformXMove in program to "xMove" in shaderID program
     // uniformModel = glGetUniformLocation(shaderID, "model");

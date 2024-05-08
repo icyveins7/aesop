@@ -94,6 +94,10 @@ int main(int argc, char *argv[])
         (int)vertices.size(),
         (int)indices.size()
     );
+    // Move validate to after the bindings in mesh
+    glValidateProgram(lineItemShader.GetShaderID());
+
+
     // Generate bounds for plotting camera later
     glm::vec4 dataLimits = getDataLimits(vertices);
     printf("Data limits are (%f, %f, %f, %f)\n", dataLimits[0], dataLimits[1], dataLimits[2], dataLimits[3]);

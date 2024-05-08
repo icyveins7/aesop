@@ -7,11 +7,11 @@
 class Shader
 {
 public:
-	Shader(const char *vertexCode, const char *fragmentCode);
-	~Shader();
+    Shader(const char *vertexCode, const char *fragmentCode);
+    ~Shader();
 
-	// Helper function for loading shaders from files
-	static std::string ReadFile(const char* fileLocation);
+    // Helper function for loading shaders from files
+    static std::string ReadFile(const char* fileLocation);
 
     void UseShader();
     void ClearShader();
@@ -30,9 +30,10 @@ public:
     // }
 
     inline GLuint GetVpLocation(){return uniformVp;}
+    inline GLuint GetShaderID(){ return shaderID; }
 
 protected:
-	GLuint shaderID = 0;
+    GLuint shaderID = 0;
     // GLuint uniformProjection = 0;
     // GLuint uniformModel = 0;
     // GLuint uniformView = 0;
@@ -40,8 +41,8 @@ protected:
     // Combined the matrices
     GLuint uniformVp = 0;
 
-	void CompileShader(const char* vertexCode, const char* fragmentCode);
-	void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
+    void CompileShader(const char* vertexCode, const char* fragmentCode);
+    void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 };
 
 // ==============================================
