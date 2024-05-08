@@ -14,14 +14,14 @@ Camera::~Camera()
 
 void Camera::calcViewMatrix()
 {
-    viewMat = glm::lookAt(pos, glm::vec3(pos.x, pos.y, 0.0), up); // it's actually a lot simpler than i thought    
+    viewMat = glm::lookAt(pos, glm::vec3(pos.x, pos.y, 0.0), up); // it's actually a lot simpler than i thought
 }
 
 void Camera::calcProjectionMatrix()
 {
     // Under orthographic projection, we are simply defining the cuboid from the camera forwards
     // Thus the fatter/taller the cuboid, the more we view and render into the screen => zoomed out
-    projMat = glm::ortho(-xzoom, xzoom, -yzoom, yzoom, 0.0f, 100.0f);
+    projMat = glm::ortho(-xzoom/2, xzoom/2, -yzoom/2, yzoom/2, 0.0f, 100.0f);
 }
 
 void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
@@ -74,10 +74,10 @@ void Camera::keyControl(bool *keys, glm::vec4 &dataLimits)
     // Fit to data
     if (keys[GLFW_KEY_F])
     {
-        pos[0] = (dataLimits[0] + dataLimits[1]) / 2.0f;
-        pos[1] = (dataLimits[2] + dataLimits[3]) / 2.0f;
-        xzoom = (dataLimits[1] - dataLimits[0]) / 2.0f;
-        yzoom = (dataLimits[3] - dataLimits[2]) / 2.0f;
+        pos[0] = (dataLimits[0] + dataLimits[1]) / 2;
+        pos[1] = (dataLimits[2] + dataLimits[3]) / 2;
+        xzoom = (dataLimits[1] - dataLimits[0]);
+        yzoom = (dataLimits[3] - dataLimits[2]);
     }
 
 
