@@ -38,7 +38,7 @@ include_directories(
 
 # Add our one example for now
 add_executable(
-    example
+    line_example
     src/main.cpp
     src/Camera.cpp
     src/Mesh.cpp
@@ -46,8 +46,11 @@ add_executable(
     src/Window.cpp
 )
 target_link_libraries(
-    example PUBLIC GLEW::GLEW OpenGL::GL glfw
+    line_example PUBLIC GLEW::GLEW OpenGL::GL glfw
 )
+
+# Add an example for heatmap squares
+
 
 
 

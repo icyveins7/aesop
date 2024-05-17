@@ -1,12 +1,15 @@
 #include "Shader.h"
+#include "Window.h"
 #include <iostream>
 #include <cstring>
 
-Shader::Shader(const char *vertexCode, const char *fragmentCode) {
-    CompileShader(vertexCode, fragmentCode);
+Shader::Shader(const char *vertexCode, const char *fragmentCode, const char *geometryCode) {
+    CompileShader(vertexCode, fragmentCode, geometryCode);
 }
 
-void Shader::CompileShader(const char* vertexCode, const char* fragmentCode) {
+void Shader::CompileShader(
+    const char* vertexCode, const char* fragmentCode, const char* geometryCode
+) {
     shaderID = glCreateProgram();
 
     if (!shaderID) {
@@ -16,6 +19,8 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode) {
 
     AddShader(shaderID, vertexCode, GL_VERTEX_SHADER);
     AddShader(shaderID, fragmentCode, GL_FRAGMENT_SHADER);
+    if (geometryCode != nullptr)
+        AddShader(shaderID, geometryCode, GL_GEOMETRY_SHADER);
 
     GLint result = 0;
     GLchar eLog[1024] = { 0 };
@@ -45,6 +50,10 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode) {
     // uniformView = glGetUniformLocation(shaderID, "view");
 
     uniformVp = glGetUniformLocation(shaderID, "vp");
+
+    // TODO: move this somewhere else
+    if (geometryCode != nullptr)
+        uniformHalflength = glGetUniformLocation(shaderID, "halflength");
 }
 
 void Shader::AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType) {
@@ -124,6 +133,22 @@ PlotShader::PlotShader()
 }
 
 PlotShader::~PlotShader()
+{
+
+}
+
+// =============================
+HeatmapShader::HeatmapShader()
+    : Shader{
+        Shader::ReadFile("../shaders/HeatmapShader.vert").c_str(),
+        Shader::ReadFile("../shaders/HeatmapShader.frag").c_str(),
+        Shader::ReadFile("../shaders/HeatmapShader.geom").c_str(),
+    }
+{
+
+}
+
+HeatmapShader::~HeatmapShader()
 {
 
 }

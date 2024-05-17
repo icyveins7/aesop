@@ -7,7 +7,7 @@
 class Shader
 {
 public:
-    Shader(const char *vertexCode, const char *fragmentCode);
+    Shader(const char *vertexCode, const char *fragmentCode, const char *geometryCode = nullptr);
     ~Shader();
 
     // Helper function for loading shaders from files
@@ -30,6 +30,7 @@ public:
     // }
 
     inline GLuint GetVpLocation(){return uniformVp;}
+    inline GLfloat GetHalfLengthLocation(){ return uniformHalflength; } // TODO: move to classes that actually always need this
     inline GLuint GetShaderID(){ return shaderID; }
 
 protected:
@@ -40,8 +41,9 @@ protected:
 
     // Combined the matrices
     GLuint uniformVp = 0;
+    GLfloat uniformHalflength = 0.0f; // TODO: move this to classes that actually need this
 
-    void CompileShader(const char* vertexCode, const char* fragmentCode);
+    void CompileShader(const char* vertexCode, const char* fragmentCode, const char* geometryCode);
     void AddShader(GLuint theProgram, const char* shaderCode, GLenum shaderType);
 };
 
@@ -51,4 +53,12 @@ class PlotShader : public Shader
 public:
     PlotShader();
     ~PlotShader();
+};
+
+// ==============================================
+class HeatmapShader : public Shader
+{
+public:
+    HeatmapShader();
+    ~HeatmapShader();
 };
